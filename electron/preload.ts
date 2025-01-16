@@ -121,6 +121,36 @@ const outerbaseIpc = {
       ipcRenderer.invoke("set-setting", key, value),
   },
 
+  // expose docs ipc following remote save doc from web studio: https://github.com/outerbase/studio/blob/develop/src/drivers/saved-doc/remote-saved-doc.ts
+  docs: {
+    getNamespaces: (): Promise<unknown> =>
+      ipcRenderer.invoke("docs:getNamespaces"),
+
+    createNamespace: (name: string): Promise<unknown> =>
+      ipcRenderer.invoke("docs:createNamespace", name),
+
+    updateNamespace: (id: string, name: string): Promise<unknown> =>
+      ipcRenderer.invoke("docs:updateNamespace", id, name),
+
+    removeNamespace: (id: string): Promise<void> =>
+      ipcRenderer.invoke("docs:removeNamespace", id),
+
+    createDoc: (
+      type: string,
+      namespace: string,
+      data: Record<string, unknown>,
+    ): Promise<unknown> =>
+      ipcRenderer.invoke("docs:createDoc", type, namespace, data),
+
+    getDocs: (): Promise<unknown> => ipcRenderer.invoke("docs:getDocs"),
+
+    updateDoc: (id: string, data: Record<string, unknown>): Promise<unknown> =>
+      ipcRenderer.invoke("docs:updateDoc", id, data),
+
+    removeDoc: (id: string): Promise<void> =>
+      ipcRenderer.invoke("docs:removeDoc", id),
+  },
+
   sendAnalyticEvents(deviceId: string, events: TrackEventItem[]) {
     return ipcRenderer.invoke("send-analytic", deviceId, events);
   },
