@@ -17,7 +17,7 @@
 
 By default, notarization step is __enabled__. You can opt-out of notarization by commenting out the following line in `electron-builder.json5`:
 
-```json
+```json5
 afterSign: "scripts/notarize.cjs",
 ```
 
